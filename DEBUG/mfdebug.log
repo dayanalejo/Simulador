@@ -1,0 +1,40 @@
+
+NetExpress Exception Handler - 18/05/2015  04:38:04 p.m.
+C:\Program Files (x86)\Micro Focus\Net Express 5.1\Base\BIN\runw.exe caused an exception at address : 0x0322054F
+Exception type - EXCEPTION_ACCESS_VIOLATION on Read. Address 0x00000000
+
+Registers:
+
+	EAX 00000031	EBX 0018EFD0
+	ECX 60095154	EDX 0031A8F8
+	DS  002B	ESI 00000000
+	ES  002B	EDI 030E7889
+	FS  0053	GS  002B
+	CS  0023	EIP 0322054F
+	SS  002B	ESP 0018EFC0	EBP 0018F070
+	Flags 00010202
+
+Error occurred in : accounts.gnt
+
+COBOL call stack:
+
+	ACCOUNTS	(gnt program), loaded from C:\Users\TitaniumWinVL\Desktop\DobleTitulacionCanada\SimuladorDeBanco\DEBUG
+	ADMINISTRADOR	(gnt program), loaded from C:\Users\TitaniumWinVL\Desktop\DobleTitulacionCanada\SimuladorDeBanco\DEBUG
+	ADMINISTRADOR	(gnt program), loaded from C:\Users\TitaniumWinVL\Desktop\DobleTitulacionCanada\SimuladorDeBanco\DEBUG
+	MAIN	(int program), loaded from C:\Users\TitaniumWinVL\Desktop\DobleTitulacionCanada\SimuladorDeBanco\DEBUG
+
+Run-time : C:\Program Files (x86)\Micro Focus\Net Express 5.1\Base\BIN\CBLRTSS.DLL, loaded at 0x60000000
+
+	CompanyName Micro Focus
+	FileDescription Micro Focus 32-bit RTS
+	FileVersion 15.11
+	LegalCopyright Copyright (C) 1984-2008 Micro Focus (IP) Limited.
+	OriginalFileName cblrtss.dll
+	ProductName Net Express 5.1
+	ProductVersion 5.100.0157
+
+OS Information:
+
+Windows NT 6.1 (Build 7600: )
+CPU: Intel Pentium Model 42 step 7, 1 processors
+Available memory - 1572408 KB
