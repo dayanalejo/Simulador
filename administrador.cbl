@@ -108,7 +108,7 @@
        Data Division.
        Local-Storage Section.
          77  IDA               PIC 9.
-         77  Montoinicial      PIC 9(9).
+         77  Montoinicial      PIC 9(10).
          77  NumAccount        PIC 9(9).
          01  TipodeCueta       PIC 9.
              88  Ahorro        VALUE ZERO.

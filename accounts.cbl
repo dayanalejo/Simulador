@@ -36,22 +36,25 @@
        Method-ID. GetMonto.
       *>----------------------------------------------
        Data Division.
+        Local-Storage Section.
         Linkage Section.
            77 LSNumaccounts       PIC X(9).
-           77 LSMontodisponible   PIC 9(10).
+           77 MontoAc  PIC X(10).
+
 
 
        Procedure Division using  LSNumaccounts
-                                 returning LSMontodisponible.
+                                 returning MontoAc.
 
           OPEN I-O Accounts
           MOVE LSNumaccounts TO Numaccounts
             READ Accounts
               KEY IS  Numaccounts
               INVALID KEY DISPLAY "La cuenta no existe"
-               MOVE 0 TO LSMontodisponible
+               MOVE 0 TO MontoAc
               NOT INVALID KEY
-               MOVE Montodisponible TO LSMontodisponible
+               DISPLAY  Montodisponible
+               MOVE   Montodisponible TO  MontoAc
               END-READ
               CLOSE Accounts.
 
@@ -64,11 +67,11 @@
 
        Data Division.
         Linkage Section.
-           77 LSIdCustomer      PIC X(9).
+           77 LSIdaccounts      PIC X(9).
            77 LSMontodisponible PIC 9(10).
 
 
-       Procedure Division using  LSMontodisponible LSIdCustomer .
+       Procedure Division using  LSMontodisponible LSIdaccounts.
 
 
           OPEN I-O Accounts
@@ -95,9 +98,9 @@
        Data Division.
         Linkage Section.
        77  LSNumaccounts       PIC 9(9).
-       77  LSIdCustomer        PIC 9.
-       77  LSIdDebitcard       PIC 9.
-       77  LSMontodisponible   PIC 9(9).
+       77  LSIdCustomer        PIC 9(9).
+       77  LSIdDebitcard       PIC X(15).
+       77  LSMontodisponible   PIC 9(10).
        01  LSTipodeCueta       PIC 9.
                88  LSAhorro    VALUE ZERO.
                88  LSCorriente VALUE 1.

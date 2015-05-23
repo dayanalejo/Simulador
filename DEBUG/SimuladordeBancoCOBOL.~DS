@@ -1,6 +1,11 @@
 <?xml version="1.0" ?>
 <DebugState xmlns="x-schema:dbgsch01.xml" Version="1">
-    <ProgramData Name="C:\USERS\TITANIUMWINVL\DOCUMENTS\GITHUB\SIMULADORDEBANCO\SIMULADOR\DEBUG\CUSTOMER.INT">
+    <ProgramData Name="C:\USERS\ALUMNO\DESKTOP\SIMULADOR-MASTER\DEBUG\RETIRO.IDY">
+        <BreakpointSection/>
+        <MonitorSection/>
+        <QueryListSection/>
+    </ProgramData>
+    <ProgramData Name="C:\USERS\ANDRESL\DOCUMENTS\SIMULADOR-MASTER\DEBUG\MAIN.IDY">
         <BreakpointSection/>
         <MonitorSection/>
         <QueryListSection/>

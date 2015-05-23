@@ -24,7 +24,8 @@
 
                modulo-principal.
                perform Menu.
-           stop run.
+               stop run.
+
 
 
               Menu.
