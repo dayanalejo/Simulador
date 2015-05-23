@@ -17,37 +17,33 @@
        Method-ID. ConsultarDatosParaCrearCuenta.
        Data Division.
        Local-Storage Section.
-         77  IdentificacionUsuario  PIC 9.
-         77  IdDebitcard PIC 9.
-         77  IdCustomer  PIC 9.
+         77  IdentificacionUsuario  PIC 9(9).
+         77  IdDebitcard PIC X(15).
          77  istrue      PIC 9.
        DISPLAY  "Ingresar la Identificacion del Usuario"
        ACCEPT  IdentificacionUsuario
 
 
              INVOKE  "CrearUsuario" using IdentificacionUsuario
-                                    returning IdCustomer
-             INVOKE  "CrearTarjeta"  returning IdDebitcard
-             INVOKE  "CrearNuevaCuenta" using IdCustomer IdDebitcard
-                                       returning istrue
 
-       DISPLAY  "La cuenta Fue Creada"
-       ACCEPT   istrue
+             INVOKE  "CrearTarjeta" returning IdDebitcard
+             INVOKE  "CrearNuevaCuenta" using IdentificacionUsuario
+                                              IdDebitcard
 
        End Method ConsultarDatosParaCrearCuenta.
       *>----------------------------------------------
        Method-ID. CrearTarjeta.
        Data Division.
        Local-Storage Section.
-        77  NumeroTarjeta     PIC X(15).
         77  PINDebitcard      PIC 9(4).
         77  IDbank            PIC 9.
+        77  Mensaje           PIC X(15).
        01  obj-Debitcard   object reference.
 
        Linkage Section.
-        77  LSIdDebitcard  PIC 9.
+        77  NumeroTarjeta  PIC X(15).
 
-       Procedure Division Returning LSIdDebitcard.
+       Procedure Division Returning NumeroTarjeta.
 
 
        DISPLAY  "Ingrese los datos de la Nueva Tarjeta"
@@ -66,7 +62,8 @@
                                                     PINDebitcard
                                                     IDbank
                                                     Returning
-                                                    LSIdDebitcard
+                                                    Mensaje
+       DISPLAY Mensaje
 
        End Method CrearTarjeta.
       *>----------------------------------------------
@@ -78,26 +75,32 @@
         01  obj-customer   object reference.
 
        Linkage Section.
-        77  Lsidentificacion PIC X(9).
+        77  Lsidentificacion PIC 9(9).
         77  LSIDcustomer     PIC 9.
-        77  Validar PIC 9.
+        77  existe           PIC 9.
 
-       Procedure Division using  Lsidentificacion
-                                 returning LSIDcustomer.
+       Procedure Division using  Lsidentificacion.
 
-       DISPLAY  "Ingrese Datos del Usuario"
-       DISPLAY  "Ingresar Nombre del Cliente"
-       ACCEPT   nombreUsuario
-       DISPLAY  "Ingresar Dirreccion del Cliente"
-       ACCEPT   dirreccionUsuario
 
        INVOKE customer "New"
                RETURNING obj-customer.
 
        INVOKE obj-customer "BuscarCustomer" using Lsidentificacion
-                                         returning Validar.
+                                            Returning existe
 
+         IF  existe =1 THEN
+          DISPLAY "El usuario ya esta registrado"
+         ELSE
 
+           DISPLAY  "Ingrese Datos del Usuario"
+           DISPLAY  "Ingresar Nombre del Cliente"
+           ACCEPT   nombreUsuario
+           DISPLAY  "Ingresar Dirreccion del Cliente"
+           ACCEPT   dirreccionUsuario
+           INVOKE obj-customer "GuardarCustomer" using Lsidentificacion
+                                                   nombreUsuario
+                                                   dirreccionUsuarIO
+         END-IF.
 
        End Method CrearUsuario.
       *>----------------------------------------------
@@ -108,18 +111,21 @@
        Local-Storage Section.
          77  IDA               PIC 9.
          77  Montoinicial      PIC 9(9).
+         77  NumAccount        PIC 9(9).
          01  TipodeCueta       PIC 9.
              88  Ahorro        VALUE ZERO.
              88  Corriente     VALUE 1.
        01  obj-accounts   object reference.
 
        Linkage Section.
-           77  IdCustomer        PIC 9.
-           77  IdDebitcard       PIC 9.
+           77  IdCustomer        PIC 9(9).
+           77  IdDebitcard       PIC X(15).
 
        Procedure Division using  IdCustomer IdDebitcard.
 
        DISPLAY "Ingrese Los Datos De La Cuenta"
+       DISPLAY "Ingrese Numero de la cuenta"
+       ACCEPT   NumAccount
        DISPLAY  "Ingresar TipodeCueta"
        ACCEPT   TipodeCueta
        DISPLAY "Monto inicial de la cuenta"
@@ -128,13 +134,14 @@
        INVOKE accounts "New"
                RETURNING obj-accounts
 
-       INVOKE obj-accounts "GuardarCuenta" using  IdCustomer
+       INVOKE obj-accounts "GuardarCuenta" using  NumAccount
+                                                  IdCustomer
                                                   IdDebitcard
                                                   TipodeCueta
                                                   Montoinicial
-                                                returning IDA
+
        DISPLAY "La Cuenta fue Creada"
-       DISPLAY IDA
+
 
        End Method CrearNuevaCuenta.
 

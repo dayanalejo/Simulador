@@ -18,13 +18,13 @@
            SELECT Accounts ASSIGN TO "accounts.dat"
            organization is indexed
            access is dynamic
-           record key is IDA.
+           record key is Numaccounts.
 
        DATA DIVISION.
        FILE SECTION.
        FD Accounts.
        01 accounts-file.
-           05  IDA             PIC 9.
+           05  Numaccounts     PIC X(9).
            05  Montodisponible PIC 9(9).
            05  IdCustomer      PIC 9.
            05  IdDebitcard     PIC X(15).
@@ -37,23 +37,22 @@
       *>----------------------------------------------
        Data Division.
         Linkage Section.
-           77 LSIdCustomer      PIC X(9).
+           77 LSNumaccounts       PIC X(9).
            77 LSMontodisponible PIC 9.
 
 
-       Procedure Division using  LSIdCustomer
+       Procedure Division using  LSNumaccounts
                                  returning LSMontodisponible.
 
-          OPEN I-O Accounts.
-            MOVE 1 TO IDA.
-
+          OPEN I-O Accounts
+           MOVE 1 TO LSNumaccounts
             READ Accounts
-              KEY IS  IDA
+              KEY IS  Numaccounts
               INVALID KEY DISPLAY "KEY IS NOT EXISTING"
               END-READ
               DISPLAY "Monto actual del usuario"
               DISPLAY Montodisponible
-              MOVE LSMontodisponible TO Montodisponible
+              MOVE Montodisponible TO LSMontodisponible
 
 
        End Method GetMonto.
@@ -73,9 +72,8 @@
 
 
           OPEN I-O Accounts
-            MOVE 1 TO IDA
             READ Accounts
-               KEY IS IDA
+               KEY IS Numaccounts
                INVALID KEY DISPLAY "KEY IS NOT EXISTING"
             END-READ.
 
@@ -96,25 +94,25 @@
       *>----------------------------------------------
        Data Division.
         Linkage Section.
-       77  LSIDA               PIC 9.
+       77  LSNumaccounts       PIC 9(9).
        77  LSIdCustomer        PIC 9.
        77  LSIdDebitcard       PIC 9.
        77  LSMontodisponible   PIC 9(9).
        01  LSTipodeCueta       PIC 9.
                88  LSAhorro    VALUE ZERO.
                88  LSCorriente VALUE 1.
-       Procedure Division using  LSIdCustomer  LSIdDebitcard
-                                 LSTipodeCueta   LSMontodisponible
-                                 returning LSIDA.
+       Procedure Division using  LSNumaccounts LSIdCustomer
+                                 LSIdDebitcard
+                                 LSTipodeCueta   LSMontodisponible.
+
              OPEN I-O  accounts
-             MOVE 2                 TO IDA
-             MOVE 2                 TO LSIDA
+             MOVE LSNumaccounts     TO Numaccounts
              MOVE LSIdCustomer      TO IdCustomer
              MOVE LSMontodisponible TO Montodisponible
              MOVE LSIdDebitcard TO IdDebitcard
              MOVE LSTipodeCueta TO TipodeCueta
              WRITE   accounts-file
-           END-WRITE .
+           END-WRITE.
            CLOSE accounts.
 
 

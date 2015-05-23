@@ -18,14 +18,13 @@
            SELECT debitcard ASSIGN TO "debitcard.dat"
            organization is indexed
            access is dynamic
-           record key is IDC.
+           record key is NumeroTarjeta.
 
        DATA DIVISION.
        FILE SECTION.
        FD debitcard.
        01 debitcard-file.
-           05  IDC        PIC 9.
-           05  Numero     PIC X(10).
+           05  NumeroTarjeta    PIC X(15).
            05  IDbank     PIC 9.
            05  PIN        PIC 9(4).
 
@@ -60,24 +59,23 @@
       *>----------------------------------------------
        Data Division.
         Linkage Section.
-           77  LSIDC       PIC 9.
-           77  LSNumero    PIC X(15).
+           77  LSNumeroTarj    PIC X(15).
            77  LSPin       PIC 9(4).
            77  LSIDbank    PIC 9.
+           77  IsOk        PIC X(15).
 
-       Procedure Division using  LSNumero  LSPin  LSIDbank
-                                 returning LSIDC.
+       Procedure Division using  LSNumeroTarj  LSPin  LSIDbank
+                                 returning IsOk.
 
              Open I-O debitcard
-             MOVE 1           TO LSIDC
-             MOVE LSIDC       TO IDC
-             MOVE LSNumero    TO Numero
-             MOVE LSPin       TO PIN
-             MOVE LSIDbank    TO IDbank
+             MOVE LSNumeroTarj  TO NumeroTarjeta
+             MOVE LSPin         TO PIN
+             MOVE LSIDbank      TO IDbank
              WRITE   debitcard-file
              END-WRITE .
              CLOSE debitcard.
 
+             move "La tarjeta se guardo Correctamenet" to IsOk
 
        End Method GuardarTarjeta.
       *>----------------------------------------------

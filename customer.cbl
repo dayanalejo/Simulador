@@ -6,12 +6,8 @@
        class-id. Customer as "customer" 
                   inherits from Base.
        
-       object section.
-       class-control.
-           customer is class "customer".
 
        working-storage section.
-
        object.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
@@ -24,11 +20,11 @@
        FILE SECTION.
        FD Customer.
        01 customer-file.
-           05  identificacion PIC X(9).
+           05  identificacion PIC 9(9).
            05  nombre         PIC X(15).
            05  dirreccion     PIC X(20).
 
-
+       procedure division.
 
        Method-ID. GetIdentificacion.
       *>----------------------------------------------
@@ -59,18 +55,21 @@
        Method-ID. GuardarCustomer.
       *>----------------------------------------------
        Data Division.
+
+        Local-Storage Section.
         Linkage Section.
-           77  IDC                 PIC 9.
-           77  LSidentificacion    PIC X(9).
+
+           77  LSidentificacion    PIC 9(9).
            77  LSnombre            PIC X(15).
            77  LSdirreccion        PIC X(20).
+           77  ISOk                PIC X(15).
+
 
        Procedure Division using  LSidentificacion  LSnombre
-                                 LSdirreccion
-                                 returning IDC.
+                                 LSdirreccion.
+
 
              OPEN I-O Customer
-             MOVE 1                 TO IDC
              MOVE LSidentificacion  TO identificacion
              MOVE LSnombre          TO nombre
              MOVE LSdirreccion      TO dirreccion
@@ -78,6 +77,7 @@
              END-WRITE .
            CLOSE Customer.
 
+            DISPLAY "cliente Creado".
 
        End Method GuardarCustomer.
       *>----------------------------------------------
@@ -96,25 +96,29 @@
       *>----------------------------------------------
        Data Division.
         Linkage Section.
-           77 IdentificacionUser PIC X(9).
-           77 existe PIC 9.
+           77 IdentificacionUser PIC 9(9).
+           77 existe PIC 99.
+           77 mover PIC 99.
 
 
        Procedure Division using  IdentificacionUser
                                  returning existe.
 
           OPEN I-O Customer.
-            MOVE 1 TO IdentificacionUser.
-
+          MOVE IdentificacionUser TO identificacion
             READ Customer
               KEY IS identificacion
-              INVALID KEY DISPLAY "KEY IS NOT EXISTING"
-              END-READ
+              INVALID KEY MOVE 0 TO existe
+             END-READ
+           compute existe =1
+
        END Method BuscarCustomer.
       *>----------------------------------------------
 
 
-
        end object.
 
-       end class Customer.
+       end class customer.
+
+
+

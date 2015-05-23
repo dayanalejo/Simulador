@@ -28,6 +28,7 @@
                DISPLAY " (2) Usuario"
                DISPLAY "-->" no advancing.
                ACCEPT  seleccionMenu.
+
                EVALUATE seleccionMenu
                WHEN 1 perform MenuAdministrador
                WHEN 2 perform MenuUsuario

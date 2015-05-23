@@ -21,37 +21,35 @@
       *>----------------------------------------------
        Data Division.
        Local-Storage Section.
-        77  nombreUsuario     PIC X(15).
-        77  dirreccionUsuario PIC X(20).
         01  obj-accounts      object reference.
         01  obj-transacition  object reference.
+        77  Montoactual      PIC 9(9).
 
         Linkage Section.
 
-           77  LSMontoRetiro   PIC 9(9).
-           77  Lsidentificacion  PIC X(9).
-           77  LSRetiroRealizado PIC 9.
-           77  LSMonto      PIC 9(9).
-           77  TransOk      PIC 9.
-       Procedure Division using  LSMontoRetiro Lsidentificacion
-                                 returning LSRetiroRealizado.
+           77  LSMontoRetiro  PIC 9(9).
+           77  LsNumaccounts  PIC X(9).
+           77  IsTransTrue    PIC 9.
+           77  RetiroOk      PIC  X(9).
+       Procedure Division using  LSMontoRetiro LsNumaccounts
+                                 returning RetiroOk.
 
        INVOKE accounts "New"
                RETURNING obj-accounts.
 
-       INVOKE obj-accounts "GetMonto" using Lsidentificacion
-                                         returning LSMonto.
+       INVOKE obj-accounts "GetMonto" using LsNumaccounts
+                                         returning MontoActual.
 
-       COMPUTE LSMonto = LSMonto -  LSRetiroRealizado.
+       COMPUTE MontoActual = MontoActual -  LSMontoRetiro.
 
-       INVOKE obj-accounts "SetMonto" using Lsidentificacion LSMonto.
+       INVOKE obj-accounts "SetMonto" using LsNumaccounts MontoActual.
 
       *REGISTRAR UNA TRANSACION
        INVOKE obj-transacition "CrearTransancion"
                                            using "1" "Retiro"
-                                                 returning TransOk.
+                                                 returning IsTransTrue.
 
-
+         MOVE "Retiro Realizado" to RetiroOk
 
        End Method registrarRetiro.
       *>----------------------------------------------
