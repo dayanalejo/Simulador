@@ -6,6 +6,10 @@
        class-id. Customer as "customer" 
                   inherits from Base.
        
+       object section.
+       class-control.
+           Customer is class "customer".
+
 
        working-storage section.
        object.
@@ -95,22 +99,26 @@
        Method-ID. BuscarCustomer.
       *>----------------------------------------------
        Data Division.
+
+        Local-Storage Section.
+           77 mover PIC 9.
+
         Linkage Section.
            77 IdentificacionUser PIC 9(9).
-           77 existe PIC 99.
-           77 mover PIC 99.
+           77 existe PIC 9.
 
 
        Procedure Division using  IdentificacionUser
                                  returning existe.
 
           OPEN I-O Customer.
-          MOVE IdentificacionUser TO identificacion
+            MOVE IdentificacionUser TO identificacion
             READ Customer
               KEY IS identificacion
               INVALID KEY MOVE 0 TO existe
+              NOT INVALID KEY  MOVE 1 TO existe
              END-READ
-           compute existe =1
+             CLOSE Customer.
 
        END Method BuscarCustomer.
       *>----------------------------------------------

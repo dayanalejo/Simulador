@@ -2,15 +2,7 @@
 <DebugState xmlns="x-schema:dbgsch01.xml" Version="1">
     <ProgramData Name="C:\USERS\TITANIUMWINVL\DOCUMENTS\GITHUB\SIMULADORDEBANCO\SIMULADOR\DEBUG\CUSTOMER.INT">
         <BreakpointSection/>
-        <MonitorSection>
-            <Monitor Type="Normal" Flags="000" Name="LSIDENTIFICACION" ExamineLine="0000000072" ExamineCol="034">
-                <ExamineText>
-                    <![CDATA[       Procedure Division using  LSidentificacion  LSnombre
-                                 LSdirreccion returning ISOk.
-]]>
-                </ExamineText>
-            </Monitor>
-        </MonitorSection>
+        <MonitorSection/>
         <QueryListSection/>
     </ProgramData>
 </DebugState>

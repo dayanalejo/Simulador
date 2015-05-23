@@ -24,8 +24,7 @@
        ACCEPT  IdentificacionUsuario
 
 
-             INVOKE  "CrearUsuario" using IdentificacionUsuario
-
+             INVOKE  "ValidarUsuario" using IdentificacionUsuario
              INVOKE  "CrearTarjeta" returning IdDebitcard
              INVOKE  "CrearNuevaCuenta" using IdentificacionUsuario
                                               IdDebitcard
@@ -61,23 +60,22 @@
        INVOKE obj-Debitcard "GuardarTarjeta" using  NumeroTarjeta
                                                     PINDebitcard
                                                     IDbank
-                                                    Returning
+                                                    returning
                                                     Mensaje
        DISPLAY Mensaje
 
        End Method CrearTarjeta.
       *>----------------------------------------------
-       Method-ID. CrearUsuario.
+       Method-ID.ValidarUsuario.
        Data Division.
        Local-Storage Section.
         77  nombreUsuario     PIC X(15).
         77  dirreccionUsuario PIC X(20).
-        01  obj-customer   object reference.
+        01  obj-customer      object reference.
+        77  existe            PIC 9.
 
        Linkage Section.
         77  Lsidentificacion PIC 9(9).
-        77  LSIDcustomer     PIC 9.
-        77  existe           PIC 9.
 
        Procedure Division using  Lsidentificacion.
 
@@ -86,7 +84,7 @@
                RETURNING obj-customer.
 
        INVOKE obj-customer "BuscarCustomer" using Lsidentificacion
-                                            Returning existe
+                                            returning existe
 
          IF  existe =1 THEN
           DISPLAY "El usuario ya esta registrado"
@@ -98,11 +96,11 @@
            DISPLAY  "Ingresar Dirreccion del Cliente"
            ACCEPT   dirreccionUsuario
            INVOKE obj-customer "GuardarCustomer" using Lsidentificacion
-                                                   nombreUsuario
-                                                   dirreccionUsuarIO
+                                                       nombreUsuario
+                                                      dirreccionUsuarIO
          END-IF.
 
-       End Method CrearUsuario.
+       End Method ValidarUsuario.
       *>----------------------------------------------
 
        Method-ID. CrearNuevaCuenta.

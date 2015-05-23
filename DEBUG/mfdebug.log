@@ -1,0 +1,46 @@
+
+NetExpress Exception Handler - 23/05/2015  02:30:35 a.m.
+C:\Program Files (x86)\Micro Focus\Net Express 5.1\Base\BIN\runw.exe caused an exception at address : 0x6002CE20
+Exception type - EXCEPTION_ACCESS_VIOLATION on Read. Address 0x00000000
+
+Registers:
+
+	EAX 00000000	EBX 00000000
+	ECX FFFFFFFF	EDX 00000000
+	DS  002B	ESI 00000000
+	ES  002B	EDI 00000000
+	FS  0053	GS  002B
+	CS  0023	EIP 6002CE20
+	SS  002B	ESP 0018E3B8	EBP 0018E6E8
+	Flags 00010246
+
+Error occurred in : C:\Program Files (x86)\Micro Focus\Net Express 5.1\Base\BIN\CBLRTSS.DLL, loaded at 0x60000000
+
+	CompanyName Micro Focus
+	FileDescription Micro Focus 32-bit RTS
+	FileVersion 15.11
+	LegalCopyright Copyright (C) 1984-2008 Micro Focus (IP) Limited.
+	OriginalFileName cblrtss.dll
+	ProductName Net Express 5.1
+	ProductVersion 5.100.0157
+
+COBOL call stack:
+
+	USUARIO	(int program), loaded from C:\Users\TitaniumWinVL\Documents\GitHub\SimuladorDeBanco\Simulador\DEBUG
+	MAIN	(int program), loaded from C:\Users\TitaniumWinVL\Documents\GitHub\SimuladorDeBanco\Simulador\DEBUG
+
+Run-time : C:\Program Files (x86)\Micro Focus\Net Express 5.1\Base\BIN\CBLRTSS.DLL, loaded at 0x60000000
+
+	CompanyName Micro Focus
+	FileDescription Micro Focus 32-bit RTS
+	FileVersion 15.11
+	LegalCopyright Copyright (C) 1984-2008 Micro Focus (IP) Limited.
+	OriginalFileName cblrtss.dll
+	ProductName Net Express 5.1
+	ProductVersion 5.100.0157
+
+OS Information:
+
+Windows NT 6.1 (Build 7600: )
+CPU: Intel Pentium Model 42 step 7, 1 processors
+Available memory - 1572408 KB

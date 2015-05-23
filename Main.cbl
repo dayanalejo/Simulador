@@ -3,7 +3,8 @@
 
        object section.
        class-control.
-           Administrador is class "administrador".
+           Administrador is class "administrador"
+           Usuario is class "usuario".
 
            data division.
            working-storage section.
@@ -14,14 +15,19 @@
            01  obj-Usuario       object reference.
 
            procedure division.
-           modulo-principal.
-           perform Menu.
+
+            INVOKE Administrador "New"
+            RETURNING obj-Admnistrador
+            INVOKE Usuario "New"
+            RETURNING obj-Usuario.
+
+
+               modulo-principal.
+               perform Menu.
            stop run.
 
 
               Menu.
-               INVOKE Administrador "New"
-               RETURNING obj-Admnistrador.
 
                DISPLAY " ".
                DISPLAY " (1) Administrador"
@@ -57,7 +63,12 @@
                DISPLAY "-->" no advancing.
                ACCEPT  seleccionMenuUsu.
                EVALUATE seleccionMenuUsu
-               WHEN 1 perform MenuAdministrador
+               WHEN 1 perform
+
+                     INVOKE obj-Usuario
+                                       "RealizarRetiroyTransation"
+
+
                WHEN 2 perform MenuUsuario
                WHEN OTHER move zero to seleccionMenuUsu
                END-EVALUATE.

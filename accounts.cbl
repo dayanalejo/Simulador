@@ -25,7 +25,7 @@
        FD Accounts.
        01 accounts-file.
            05  Numaccounts     PIC X(9).
-           05  Montodisponible PIC 9(9).
+           05  Montodisponible PIC 9(10).
            05  IdCustomer      PIC 9.
            05  IdDebitcard     PIC X(15).
            05  TipodeCueta     PIC 9.
@@ -38,22 +38,22 @@
        Data Division.
         Linkage Section.
            77 LSNumaccounts       PIC X(9).
-           77 LSMontodisponible PIC 9.
+           77 LSMontodisponible   PIC 9(10).
 
 
        Procedure Division using  LSNumaccounts
                                  returning LSMontodisponible.
 
           OPEN I-O Accounts
-           MOVE 1 TO LSNumaccounts
+          MOVE LSNumaccounts TO Numaccounts
             READ Accounts
               KEY IS  Numaccounts
-              INVALID KEY DISPLAY "KEY IS NOT EXISTING"
+              INVALID KEY DISPLAY "La cuenta no existe"
+               MOVE 0 TO LSMontodisponible
+              NOT INVALID KEY
+               MOVE Montodisponible TO LSMontodisponible
               END-READ
-              DISPLAY "Monto actual del usuario"
-              DISPLAY Montodisponible
-              MOVE Montodisponible TO LSMontodisponible
-
+              CLOSE Accounts.
 
        End Method GetMonto.
       *>----------------------------------------------
@@ -65,7 +65,7 @@
        Data Division.
         Linkage Section.
            77 LSIdCustomer      PIC X(9).
-           77 LSMontodisponible PIC 9.
+           77 LSMontodisponible PIC 9(10).
 
 
        Procedure Division using  LSMontodisponible LSIdCustomer .
